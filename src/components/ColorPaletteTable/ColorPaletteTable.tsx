@@ -3,7 +3,6 @@ import { hexFrom } from '@/interfaces/image'
 import {
   Swatch,
   Table,
-  Caption,
   Td,
   Th,
 } from '@/components/ColorPaletteTable/ColorPaletteTable.styles'
@@ -28,7 +27,6 @@ export interface ColorPaletteTableProps {
 export function ColorPaletteTable({ palette }: ColorPaletteTableProps) {
   return (
     <Table data-testid="palette-table">
-      <Caption>Tabla de colores — coincide con los números de la lámina</Caption>
       <thead>
         <tr>
           <Th scope="col">Nº</Th>
@@ -40,25 +38,27 @@ export function ColorPaletteTable({ palette }: ColorPaletteTableProps) {
         </tr>
       </thead>
       <tbody>
-        {palette.map((color) => {
-          const hex = hexFrom(color.color)
-          return (
-            <tr key={color.number}>
-              <Td>{color.number}</Td>
-              <Td>
-                <Swatch
-                  $color={hex}
-                  role="img"
-                  aria-label={`Muestra del color ${color.number}`}
-                />
-              </Td>
-              <Td>{hex}</Td>
-              <Td>{rgbString(color.color)}</Td>
-              <Td>{rgbaString(color.color)}</Td>
-              <Td>{coveragePct(color.coverage)}</Td>
-            </tr>
-          )
-        })}
+        {[...palette]
+          .sort((a, b) => a.number - b.number)
+          .map((color) => {
+            const hex = hexFrom(color.color)
+            return (
+              <tr key={color.number}>
+                <Td>{color.number}</Td>
+                <Td>
+                  <Swatch
+                    $color={hex}
+                    role="img"
+                    aria-label={`Muestra del color ${color.number}`}
+                  />
+                </Td>
+                <Td>{hex}</Td>
+                <Td>{rgbString(color.color)}</Td>
+                <Td>{rgbaString(color.color)}</Td>
+                <Td>{coveragePct(color.coverage)}</Td>
+              </tr>
+            )
+          })}
       </tbody>
     </Table>
   )

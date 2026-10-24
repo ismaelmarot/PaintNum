@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import type { DecodedImage, PaintByNumberResult, PaperConfig } from '@/interfaces'
 import { canvasToBlob, originalCanvas, paintingCanvas } from '@/utils/exporting/canvases'
-import { downloadBlob, buildExportZip, ZIP_FILE_NAMES } from '@/utils/exporting/exportZip'
+import { downloadBlob, buildExportZip } from '@/utils/exporting/exportZip'
 import { buildPaintingPdf } from '@/utils/exporting/paintingPdf'
 
 export type ExportKind = 'pdf' | 'zip'
@@ -10,6 +10,9 @@ export interface ExportManager {
   busyKind: ExportKind | null
   error: string | null
   canExport: boolean
+  /** Nombre elegido por el usuario (sanitizado) para el archivo descargado. */
+  filename: string
+  setFilename: (raw: string) => void
   runExport: (kind: ExportKind) => Promise<void>
   clearError: () => void
 }
@@ -20,12 +23,25 @@ export interface ExportInput {
   paper: PaperConfig
 }
 
+export const DEFAULT_EXPORT_NAME = 'paintnum'
+
+/** Sanitiza el nombre para filename: sin \ / : * ? " < > | ni espacios extras. */
+export function sanitizeFilename(raw: string): string {
+  const cleaned = raw.replace(/[\\/:*?"<>|]/g, '').trim()
+  return cleaned.length > 0 ? cleaned : DEFAULT_EXPORT_NAME
+}
+
 /** Lógica de exportación: PDF y ZIP con estados y limpieza de recursos. */
 export function useExportManager(input: ExportInput): ExportManager {
   const [busyKind, setBusyKind] = useState<ExportKind | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [filename, setFilenameState] = useState(DEFAULT_EXPORT_NAME)
   const canExport =
     input.image !== undefined && input.result !== undefined
+
+  const setFilename = useCallback((raw: string) => {
+    setFilenameState(sanitizeFilename(raw))
+  }, [])
 
   const runExport = useCallback(
     async (kind: ExportKind) => {
@@ -45,7 +61,7 @@ export function useExportManager(input: ExportInput): ExportManager {
           // jsPDF: el blob incluye las páginas ya maquetadas.
           downloadBlob(
             doc.output('blob') as Blob,
-            `paintnum-${input.paper.paperSize.toLowerCase()}.pdf`,
+            `${filename}.pdf`,
           )
         } else {
           const paintingBlob = await canvasToBlob(painting)
@@ -57,7 +73,7 @@ export function useExportManager(input: ExportInput): ExportManager {
             paintingCanvas: painting,
             paintingBlob,
           })
-          downloadBlob(zipBlob, `${ZIP_FILE_NAMES.painting.replace('.png', '')}.zip`)
+          downloadBlob(zipBlob, `${filename}.zip`)
         }
       } catch (exportError) {
         setError(
@@ -69,13 +85,15 @@ export function useExportManager(input: ExportInput): ExportManager {
         setBusyKind(null)
       }
     },
-    [busyKind, canExport, input],
+    [busyKind, canExport, filename, input],
   )
 
   return {
     busyKind,
     error,
     canExport,
+    filename,
+    setFilename,
     runExport,
     clearError: useCallback(() => setError(null), []),
   }

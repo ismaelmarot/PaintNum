@@ -40,6 +40,11 @@ export const SHARE_INTENTS: ShareIntent[] = [
     label: 'Facebook',
     intentTemplate: 'https://www.facebook.com/sharer/sharer.php?u={url}&quote={text}',
   },
+  // Instagram no expone intent de publicación web: la UI lo resuelve con descarga.
+  {
+    id: 'instagram',
+    label: 'Instagram',
+  },
 ]
 
 const MESSAGE_BASE = 'Transformé mis fotos en pinturas por números con PaintNum:'

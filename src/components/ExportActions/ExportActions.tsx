@@ -2,6 +2,7 @@ import type { ExportManager } from '@/components/ExportActions/useExportManager'
 import {
   BusyNote,
   ExportError,
+  NameInput,
   PrimaryButton,
   Row,
   SecondaryButton,
@@ -39,13 +40,20 @@ export interface ExportActionsProps {
   manager: ExportManager
 }
 
-/** Acciones de descarga: PDF de impresión y ZIP completo. */
+/** Acciones de descarga: nombre del archivo + PDF de impresión y ZIP completo. */
 export function ExportActions({ manager }: ExportActionsProps) {
-  const { canExport, busyKind, error, runExport } = manager
+  const { canExport, busyKind, error, runExport, filename, setFilename } = manager
   const busy = busyKind !== null
 
   return (
     <Row>
+      <NameInput
+        aria-label="Nombre del archivo a descargar"
+        placeholder="paintnum"
+        value={filename}
+        onChange={(event) => setFilename(event.target.value)}
+        disabled={busy}
+      />
       <PrimaryButton
         type="button"
         disabled={!canExport || busy}

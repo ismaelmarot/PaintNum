@@ -92,6 +92,34 @@ export const Dots = styled.span`
   }
 `
 
+export const AppleButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => `${theme.spacing.s} ${theme.spacing.m}`};
+  border: ${({ theme }) => theme.border.subtle};
+  border-radius: ${({ theme }) => theme.radius.round};
+  background-color: ${({ theme }) => theme.color.background};
+  color: ${({ theme }) => theme.color.text};
+  font: ${({ theme }) => `500 ${theme.typography.size.footnote} ${theme.typography.family}`};
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.color.surfaceMuted};
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: ${({ theme }) => theme.color.accent};
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+`
+
 export const TableWrap = styled.div`
   overflow-x: auto;
 `

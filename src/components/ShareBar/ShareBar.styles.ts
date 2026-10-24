@@ -8,25 +8,41 @@ export const Bar = styled.div`
   flex-wrap: wrap;
 `
 
-export const ShareButton = styled.button`
+/** Colores oficiales de cada app (2026). */
+export const BRAND_COLORS = {
+  whatsapp: '#25D366',
+  telegram: '#229ED9',
+  x: '#000000',
+  pinterest: '#E60023',
+  facebook: '#1877F2',
+  instagram: '#E4405F',
+} as const
+
+export type BrandColorKey = keyof typeof BRAND_COLORS
+
+export const ShareButton = styled.button<{ $brand: string }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
   padding: 0;
-  border: ${({ theme }) => theme.border.subtle};
+  border: none;
   border-radius: ${({ theme }) => theme.radius.round};
-  background-color: ${({ theme }) => theme.color.background};
-  color: ${({ theme }) => theme.color.textSecondary};
+  background-color: transparent;
+  color: ${({ $brand }) => $brand};
   cursor: pointer;
   transition:
-    background-color ${({ theme }) => theme.motion.fast} ${({ theme }) => theme.ease.standard},
-    color ${({ theme }) => theme.motion.fast} ${({ theme }) => theme.ease.standard};
+    transform ${({ theme }) => theme.motion.fast} ${({ theme }) => theme.ease.standard},
+    opacity ${({ theme }) => theme.motion.fast} ${({ theme }) => theme.ease.standard};
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
 
   &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.color.surfaceMuted};
-    color: ${({ theme }) => theme.color.text};
+    transform: scale(1.08);
   }
 
   &:focus-visible {

@@ -3,7 +3,7 @@
 import type { PaperConfig } from '@/interfaces/printing'
 
 /** Presets de detalle para el tratamiento de regiones pequeñas. */
-export type DetailPresetId = 'fine' | 'balanced' | 'coarse'
+export type DetailPresetId = 'ultrafine' | 'fine' | 'balanced' | 'coarse'
 
 export interface WorkspaceConfig {
   /** Cantidad deseada de colores de la paleta. */

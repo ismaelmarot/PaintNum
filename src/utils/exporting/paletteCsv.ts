@@ -1,8 +1,4 @@
-/** CSV de la tabla de colores (UTF-8 con BOM para abrir bien en Excel).
-
-Columnas: numero,id_interno,hex,rgb,rgba,superficie_pct
-- id_interno: índice interno de persistencia? No: quitar
-*/
+/** CSV de la tabla de colores (UTF-8 con BOM para abrir bien en Excel). */
 
 import type { PaletteColor } from '@/interfaces'
 import { hexFrom } from '@/interfaces/image'
@@ -29,8 +25,9 @@ export const PALETTE_CSV_HEADER = [
 ]
 
 export function buildPaletteCsv(palette: PaletteColor[]): string {
+  const sorted = [...palette].sort((a, b) => a.number - b.number)
   const lines = [PALETTE_CSV_HEADER.join(',')]
-  for (const paletteColor of palette) {
+  for (const paletteColor of sorted) {
     lines.push(paletteRow(paletteColor).join(','))
   }
   // BOM: los valores con tilde y el formato viajan seguros a Excel.

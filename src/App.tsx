@@ -22,6 +22,7 @@ import { generatePaintByNumbers } from '@/utils/imageProcessing/pipeline'
 import { BaseStyles } from '@/styles/BaseStyles'
 import { theme } from '@/styles/theme'
 import {
+  AppleButton,
   Dots,
   ErrorNote,
   Hero,
@@ -137,7 +138,6 @@ export function App() {
       <BaseStyles />
       <TopBar
         hasImage={image !== null}
-        replaceButtonProps={{ label: 'Reemplazar imagen', onClick: openFilePicker }}
       />
       {/* Input de archivo a nivel app: sobrevive al cambio hero→workspace,
           para que "Reemplazar imagen" funcione después de la primera carga. */}
@@ -177,16 +177,24 @@ export function App() {
                 {result && <ImageComparator image={image} result={result} />}
               </Stage>
               <ConfigPanel config={config} onConfigChange={handleConfigChange} />
-            </WorkspaceGrid>
+</WorkspaceGrid>
 
-            {result && (
+{result && (
               <Section>
-                <SectionTitle as="h2">Tabla de colores</SectionTitle>
-                <TableWrap>
-                  <ColorPaletteTable palette={result.palette} />
-                </TableWrap>
+                <AppleButton onClick={openFilePicker} aria-label="Reemplazar imagen">
+                  Reemplazar imagen
+                </AppleButton>
               </Section>
             )}
+
+              {result && (
+                <Section>
+                  <SectionTitle as="h2">Tabla de colores</SectionTitle>
+                  <TableWrap>
+                    <ColorPaletteTable palette={result.palette} />
+                  </TableWrap>
+                </Section>
+              )}
             {result && (
               <Section>
                 <SectionTitle as="h2">Descargar</SectionTitle>

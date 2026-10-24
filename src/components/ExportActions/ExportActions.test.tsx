@@ -86,16 +86,33 @@ describe('ExportActions', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Descargar PDF' }))
 
     await waitFor(() => expect(downloadBlob).toHaveBeenCalled())
+    expect(downloadBlob).toHaveBeenLastCalledWith(expect.any(Blob), 'paintnum.pdf')
     expect(buildPaintingPdf).toHaveBeenCalledWith(
       expect.objectContaining({ paper: expect.objectContaining({ paperSize: 'A4' }) }),
     )
     expect(screen.queryByText('Generando archivo…')).not.toBeInTheDocument()
   })
 
+  it('usa el nombre elegido por el usuario (con sanitización) en PDF y ZIP', async () => {
+    render(<Harness />)
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'Nombre del archivo a descargar' }), {
+      target: { value: 'Mi pintura: lagartija?' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Descargar PDF' }))
+    await waitFor(() => expect(downloadBlob).toHaveBeenCalled())
+    expect(downloadBlob).toHaveBeenLastCalledWith(expect.any(Blob), 'Mi pintura lagartija.pdf')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Descargar ZIP' }))
+    await waitFor(() => expect(downloadBlob).toHaveBeenCalledTimes(2))
+    expect(downloadBlob).toHaveBeenLastCalledWith(expect.any(Blob), 'Mi pintura lagartija.zip')
+  })
+
   it('descarga el ZIP con los archivos esperados', async () => {
     render(<Harness />)
     fireEvent.click(screen.getByRole('button', { name: 'Descargar ZIP' }))
     await waitFor(() => expect(downloadBlob).toHaveBeenCalled())
+    expect(downloadBlob).toHaveBeenLastCalledWith(expect.any(Blob), 'paintnum.zip')
   })
 
   it('libera el estado de error si la exportación falla', async () => {

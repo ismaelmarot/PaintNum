@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { ThemeProvider } from 'styled-components'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ShareBar } from '@/components/ShareBar'
+import { BRAND_COLORS } from '@/components/ShareBar/ShareBar.styles'
 import { buildIntentUrl, shareMessage, canShareFiles, SHARE_INTENTS } from '@/config/sharing'
 import { theme } from '@/styles/theme'
 import type { PaintByNumberResult } from '@/interfaces/pbn'
@@ -69,28 +70,62 @@ describe('ShareBar', () => {
     downloadPainting.mockClear()
   })
 
-  it('muestra intents oficiales y el botón de copiar enlace', () => {
+  it('muestra SOLO los 6 socios con icono de marca y sin copy/native', () => {
     render(
       <ThemeProvider theme={theme}>
         <ShareBar result={RESULT} />
       </ThemeProvider>,
     )
+    const buttons = screen
+      .getByRole('group', { name: 'Compartir resultado' })
+      .querySelectorAll('button')
+    expect(buttons).toHaveLength(6)
+
     for (const label of ['WhatsApp', 'Telegram', 'X', 'Pinterest', 'Facebook']) {
-      expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: `Compartir en ${label}` })).toBeInTheDocument()
     }
-    expect(screen.getByRole('button', { name: 'Copiar enlace' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Instagram: descargar lámina' }),
+    ).toBeInTheDocument()
+    // Ya no existen copiar enlace ni compartir del dispositivo.
+    expect(screen.queryByRole('button', { name: /copiar enlace/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /dispositivo/i })).not.toBeInTheDocument()
   })
 
-  it('copia el enlace al portapapeles y muestra el feedback', async () => {
+  it('los botones usan los colores oficiales de cada app', () => {
+    // La fuente de verdad vive en BRAND_COLORS y colorea el glifo ($brand).
+    expect(BRAND_COLORS).toEqual({
+      whatsapp: '#25D366',
+      telegram: '#229ED9',
+      x: '#000000',
+      pinterest: '#E60023',
+      facebook: '#1877F2',
+      instagram: '#E4405F',
+    })
+  })
+
+  it('cada icono de marca es un glifo SVG decorativo', () => {
     render(
       <ThemeProvider theme={theme}>
         <ShareBar result={RESULT} />
       </ThemeProvider>,
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Copiar enlace' }))
-    await waitFor(() =>
-      expect(screen.getByText('Enlace copiado al portapapeles.')).toBeInTheDocument(),
+    const group = screen.getByRole('group', { name: 'Compartir resultado' })
+    for (const svg of group.querySelectorAll('button svg')) {
+      expect(svg).toHaveAttribute('aria-hidden')
+    }
+  })
+
+  it('Instagram descarga la lámina y lo confirma sin prometer publicación', async () => {
+    render(
+      <ThemeProvider theme={theme}>
+        <ShareBar result={RESULT} />
+      </ThemeProvider>,
     )
+    fireEvent.click(screen.getByRole('button', { name: 'Instagram: descargar lámina' }))
+    await waitFor(() => expect(downloadPainting).toHaveBeenCalled())
+    expect(screen.getByText(/Lámina descargada/i)).toBeInTheDocument()
+    expect(screen.getByText(/no permite publicar desde la web/i)).toBeInTheDocument()
   })
 
   it('los intents abren ventanas con la URL del intent', () => {
@@ -100,23 +135,12 @@ describe('ShareBar', () => {
         <ShareBar result={RESULT} />
       </ThemeProvider>,
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Telegram' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Compartir en Telegram' }))
     expect(openSpy).toHaveBeenCalledWith(
       expect.stringContaining('https://t.me/share/url'),
       '_blank',
       'noopener,noreferrer',
     )
     openSpy.mockRestore()
-  })
-
-  it('Instagram descarga la lámina y muestra la orientación sin prometer publicación', () => {
-    render(
-      <ThemeProvider theme={theme}>
-        <ShareBar result={RESULT} />
-      </ThemeProvider>,
-    )
-    expect(
-      screen.getByText(/no permite publicar desde la web/i),
-    ).toBeInTheDocument()
   })
 })

@@ -38,6 +38,7 @@ const PAPER_LABELS: Record<PaperSizeId, string> = {
 }
 
 const DETAIL_LABELS: Record<DetailPresetId, string> = {
+  ultrafine: 'Ultrafino',
   fine: 'Fino',
   balanced: 'Equilibrado',
   coarse: 'Grueso',

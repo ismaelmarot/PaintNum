@@ -90,7 +90,19 @@ Correcciones y mejoras posteriores a la primer versión del producto, todas apro
 | `npm run typecheck` (`tsc -b --noEmit`) | OK — sin errores |
 | `npm run build` | OK — `dist/` (aviso de bundle > 500 kB por jspdf/jszip, ver §5) |
 
-## 10. Pendientes / siguientes pasos
+## 10. Ronda 2 de correcciones (2026-10-23)
+
+| # | Corrección | Implementación |
+| --- | --- | --- |
+| 1 | **Números uniformes y chicos** | Modelo cambiado: `NUMBER_FONT_FRACTION = 0.02` (2% del lado mayor de trabajo) UNIFORME para todas las regiones (look de lámina comercial) — solo cambia el check de fit; regiones demasiado chicas quedan sin número (`renderPainting.test.ts`: tope, uniformidad, skip y relleno blanco). |
+| 2 | **Más detalle** | Preset `ultrafino` (`smallRegionRatio 0.0006, smallRegionMinPx 12`) + `maxWorkSide 1600 → 2000` (más resolución de trabajo; ~56% más píxeles, más CPU/RAM local). |
+| 3 | **Tabla por Nº 1,2,3…** | `ColorPaletteTable` y `buildPaletteCsv` ordenan ascendente por número (el orden interno sigue siendo por cobertura). |
+| 4 | **Nombre personalizado al descargar** | Input pill (placeholder `paintnum`, sanitización de `\ / : * ? " < > |`) → `⌂{nombre}.pdf` / `⌂{nombre}.zip`; archivos internos del ZIP quedan estándar. `useExportManager` expone `filename/setFilename`. |
+| 5 | **Compartir: 6 iconos oficiales** | Fuera Web Share (dispositivo) y “Copiar enlace”. Quedan WhatsApp `#25D366`, Telegram `#229ED9`, X `#000000`, Pinterest `#E60023`, Facebook `#1877F2`, Instagram `#E4405F` — glifos estilo simple-icons en blanco sobre fondo de marca en botón circular 36 px. Instagram = descarga la lámina (sin intent web) + confirmación y guía textual. `BRAND_COLORS` es fuente de verdad en `ShareBar.styles.ts`. |
+
+**Verificación ronda 2:** 60/60 tests (12 suites) · lint OK · typecheck OK · build OK.
+
+## 11. Pendientes / siguientes pasos
 
 - **URL de Facebook real** (reemplazar el temporal `https://www.facebook.com/`).
 - Sin commits ni push (esperando autorización explícita del desarrollador).

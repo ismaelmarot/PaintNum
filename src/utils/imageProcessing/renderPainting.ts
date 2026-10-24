@@ -49,9 +49,9 @@ export function composePaintingImageData(
   return { width, height, data }
 }
 
-/** Tope proporcional del glifo: 6% del lado mayor → números bien chicos,
- *  aunque la región sea enorme (fondo completo). */
-export const NUMBER_MAX_FONT_FRACTION = 0.06
+/** Tope del glifo: 2.5% del lado mayor (unidades de salida, con escala).
+ *  Estilo digitpaints: números pequeños, discretos y proporcionales. */
+export const NUMBER_MAX_FONT_FRACTION = 0.025
 
 export function defaultMaxFontPx(
   result: Pick<PaintByNumberResult, 'width' | 'height'>,
@@ -62,8 +62,11 @@ export function defaultMaxFontPx(
 }
 
 /**
- * Posiciones legibles de los números: centroide de la región si el glifo cabe
- * con margen en la envolvente y no supera el tope proporcional. Puro y comprobable.
+ * Posiciones de los números (puro y comprobable):
+ * - tamaño PROPORCIONAL a la envolvente de cada región, con tope global
+ *   (NUMBER_MAX_FONT_FRACTION del lado mayor, en resolución de salida);
+ * - región demasiado chica para el glifo → sin número (nunca fuera de su área);
+ * - centroide re-acotado para que el glifo no cruce contornos ni invada vecinas.
  */
 export function computeNumberPlacements(
   result: PaintByNumberResult,
@@ -79,19 +82,33 @@ export function computeNumberPlacements(
     const boundH = (region.bounds.ymax - region.bounds.ymin) * scale
     if (boundH <= 0 || boundW <= 0) continue
 
-    // El glifo debe caber con holgura en ambas dimensiones y respetar el tope.
-    const fontByHeight = boundH * 0.35
-    const fontByWidth = boundW / (text.length * 0.62 + 0.4)
-    const fontSize = Math.min(fontByHeight, fontByWidth, maxFontPx)
+    if (boundH <= 0 || boundW <= 0) continue
+
+    // Tamaño proporcional al alto de la envolvente, con tope global.
+    // Se reduce la proporción para números más pequeños y discretos
+    // (similar a digitpaints.com: glifo ~15-20% del alto de región).
+    const fontByHeight = boundH * 0.25
+    const fontByWidth = boundW / (text.length * 0.8 + 0.5)
+    const fontSize = Math.min(fontByHeight, fontByWidth, maxFontPx, 3)
     if (fontSize < minFontPx || fontSize <= 0) continue
 
+    // El glifo no puede salir de su región: re-centrado dentro de la envolvente.
+    const halfW = text.length * 0.31 * fontSize
+    const halfH = fontSize * 0.55
+    const xMin = region.bounds.xmin * scale + halfW
+    const xMax = region.bounds.xmax * scale - halfW
+    const yMin = region.bounds.ymin * scale + halfH
+    const yMax = region.bounds.ymax * scale - halfH
+    const x = region.centroid.x * scale
+    const y = region.centroid.y * scale
+
     placements.push({
-      x: region.centroid.x * scale,
-      y: region.centroid.y * scale,
+      x: Math.min(Math.max(x, xMin), Math.max(xMin, xMax)),
+      y: Math.min(Math.max(y, yMin), Math.max(yMin, yMax)),
       fontSize,
       text,
       fill: PLATE_NUMBER_FILL,
-      stroke: 'rgba(255, 255, 255, 0.85)',
+      stroke: 'rgba(255, 255, 255, 0.7)',
     })
   }
   return placements
@@ -153,7 +170,7 @@ export function drawPainting(
   const { scale } = options
   const showContours = options.showContours ?? true
   const showNumbers = options.showNumbers ?? true
-  const minNumberFontPx = options.minNumberFontPx ?? Math.max(6, scale * 7)
+  const minNumberFontPx = options.minNumberFontPx ?? Math.max(2, scale * 2)
 
   const outW = result.width * scale
   const outH = result.height * scale
@@ -190,8 +207,9 @@ export function drawPainting(
     ctx.textBaseline = 'middle'
     ctx.lineJoin = 'round'
     for (const placement of computeNumberPlacements(result, scale, minNumberFontPx)) {
-      ctx.font = `600 ${placement.fontSize}px ${FONT_STACK}`
-      ctx.lineWidth = Math.max(1, placement.fontSize * 0.12)
+      // Tipografía sencilla, fina y legible: sin negrita (500) y trazo sutil.
+      ctx.font = `500 ${placement.fontSize}px ${FONT_STACK}`
+      ctx.lineWidth = Math.max(0.6, placement.fontSize * 0.08)
       ctx.strokeStyle = placement.stroke
       ctx.strokeText(placement.text, placement.x, placement.y)
       ctx.fillStyle = placement.fill

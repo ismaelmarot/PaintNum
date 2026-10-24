@@ -25,6 +25,29 @@ export const BusyNote = styled.span`
   }
 `
 
+export const NameInput = styled.input`
+  min-width: 180px;
+  padding: ${({ theme }) => `${theme.spacing.s} ${theme.spacing.m}`};
+  border: ${({ theme }) => theme.border.subtle};
+  border-radius: ${({ theme }) => theme.radius.round};
+  background-color: ${({ theme }) => theme.color.background};
+  color: ${({ theme }) => theme.color.text};
+  font-size: ${({ theme }) => theme.typography.size.footnote};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.color.textTertiary};
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: ${({ theme }) => theme.color.accent};
+  }
+
+  &:disabled {
+    opacity: 0.45;
+  }
+`
+
 export const PrimaryButton = styled.button<{ $busy: boolean }>`
   display: inline-flex;
   align-items: center;
