@@ -28,7 +28,7 @@ export const PresentationContainer = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.color.background};
   z-index: 1000;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
 `
 
 export const PresentationContentStyled = styled.div`
@@ -45,7 +45,7 @@ export const PresentationIcon = styled.img`
   width: 96px;
   height: 96px;
   object-fit: contain;
-  animation: ${fadeInScale} 1200ms ${({ theme }) => theme.ease.standard} both;
+  animation: ${fadeInScale} 600ms ${({ theme }) => theme.ease.standard} both;
 `
 
 export const PresentationTitle = styled.h1`
@@ -54,8 +54,8 @@ export const PresentationTitle = styled.h1`
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.display};
   color: ${({ theme }) => theme.color.text};
   margin: 0;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
-  animation-delay: 1200ms;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
+  animation-delay: 600ms;
 `
 
 export const PresentationSubtitle = styled.p`
@@ -63,8 +63,8 @@ export const PresentationSubtitle = styled.p`
   font-weight: ${({ theme }) => theme.typography.weight.medium};
   color: ${({ theme }) => theme.color.textSecondary};
   margin: 0;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
-  animation-delay: 2400ms;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
+  animation-delay: 1200ms;
 `
 
 export const PresentationButton = styled.button`
@@ -78,8 +78,8 @@ export const PresentationButton = styled.button`
   font-size: ${({ theme }) => theme.typography.size.footnote};
   font-weight: 500;
   cursor: pointer;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
-  animation-delay: 3600ms;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
+  animation-delay: 1800ms;
 `
 
 export const PresentationVersion = styled.p`
@@ -87,8 +87,8 @@ export const PresentationVersion = styled.p`
   font-weight: ${({ theme }) => theme.typography.weight.medium};
   color: ${({ theme }) => theme.color.textTertiary};
   margin: 0;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
-  animation-delay: 4800ms;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
+  animation-delay: 2400ms;
 `
 
 export const PresentationDeveloper = styled.p`
@@ -96,6 +96,6 @@ export const PresentationDeveloper = styled.p`
   font-weight: ${({ theme }) => theme.typography.weight.regular};
   color: ${({ theme }) => theme.color.textTertiary};
   margin: 0;
-  animation: ${fadeIn} 1200ms ${({ theme }) => theme.ease.standard} both;
-  animation-delay: 6000ms;
+  animation: ${fadeIn} 600ms ${({ theme }) => theme.ease.standard} both;
+  animation-delay: 3000ms;
 `
