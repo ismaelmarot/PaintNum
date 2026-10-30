@@ -10,6 +10,7 @@ import { ConfigPanel } from '@/components/ConfigPanel'
 import { ColorPaletteTable } from '@/components/ColorPaletteTable'
 import { ShareBar } from '@/components/ShareBar'
 import { TopBar } from '@/components/TopBar'
+import { AppPresentation } from '@/components/AppPresentation'
 import { DETAIL_PRESETS, PROCESSING_LIMITS } from '@/config/processing'
 import { PRINTING_DEFAULTS, suggestOrientation } from '@/config/printing'
 import type {
@@ -57,6 +58,7 @@ export function App() {
   const [result, setResult] = useState<PaintByNumberResult | null>(null)
   const [status, setStatus] = useState<Status>('idle')
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [showPresentation, setShowPresentation] = useState(true)
 
   const handleImageLoaded = useCallback((loaded: DecodedImage) => {
     setImage((previous) => {
@@ -133,6 +135,16 @@ export function App() {
     }
   }, [image, config.colorCount, config.detail])
 
+  // Pantalla de presentación: se muestra una vez al montar y se descarta tras ~4s.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPresentation(false)
+    }, 4000)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <BaseStyles />
@@ -142,6 +154,7 @@ export function App() {
       {/* Input de archivo a nivel app: sobrevive al cambio hero→workspace,
           para que "Reemplazar imagen" funcione después de la primera carga. */}
       <input {...inputProps} aria-label="Seleccionar imagen" hidden />
+      {showPresentation && <AppPresentation onDismiss={() => setShowPresentation(false)} />}
       <main style={{ flex: '1 1 auto', minHeight: 0 }}>
         {!image ? (
           <Hero>
