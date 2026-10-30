@@ -5,8 +5,10 @@ import {
   PresentationIcon,
   PresentationTitle,
   PresentationSubtitle,
+  PresentationButton,
+  PresentationVersion,
+  PresentationDeveloper,
 } from '@/components/AppPresentation/AppPresentation.styles'
-import { AppleButton } from '@/styles/App.styles'
 
 interface AppPresentationProps {
   onDismiss?: () => void
@@ -27,8 +29,10 @@ const AppPresentation = ({ onDismiss }: AppPresentationProps) => {
           height={96}
         />
         <PresentationTitle>PaintNum</PresentationTitle>
-        <PresentationSubtitle>Conviértete en tu propia pintura por números</PresentationSubtitle>
-        <AppleButton onClick={handleDismiss}>Empezar</AppleButton>
+        <PresentationSubtitle>Crea tu propia Pintura por números</PresentationSubtitle>
+        <PresentationButton onClick={handleDismiss}>Comenzar</PresentationButton>
+        <PresentationVersion>v0.1.0 Stable</PresentationVersion>
+        <PresentationDeveloper>Developed by Ismael Marot</PresentationDeveloper>
       </PresentationContentStyled>
     </PresentationContainer>
   )
