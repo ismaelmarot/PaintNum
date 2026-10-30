@@ -135,16 +135,6 @@ export function App() {
     }
   }, [image, config.colorCount, config.detail])
 
-  // Pantalla de presentación: se muestra una vez al montar y se descarta tras ~5s.
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPresentation(false)
-    }, 5000)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [])
-
   return (
     <ThemeProvider theme={theme}>
       <BaseStyles />
