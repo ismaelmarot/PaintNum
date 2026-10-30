@@ -82,6 +82,18 @@ export const PresentationButton = styled.button`
   animation-delay: 1800ms;
 `
 
+export const PresentationFooter = styled.div`
+  position: absolute;
+  bottom: ${({ theme }) => theme.spacing.m};
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xxs};
+  text-align: center;
+`
+
 export const PresentationVersion = styled.p`
   font-size: ${({ theme }) => theme.typography.size.footnote};
   font-weight: ${({ theme }) => theme.typography.weight.medium};

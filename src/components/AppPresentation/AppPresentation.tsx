@@ -6,6 +6,7 @@ import {
   PresentationTitle,
   PresentationSubtitle,
   PresentationButton,
+  PresentationFooter,
   PresentationVersion,
   PresentationDeveloper,
 } from '@/components/AppPresentation/AppPresentation.styles'
@@ -31,9 +32,11 @@ const AppPresentation = ({ onDismiss }: AppPresentationProps) => {
         <PresentationTitle>PaintNum</PresentationTitle>
         <PresentationSubtitle>Crea tu propia Pintura por números</PresentationSubtitle>
         <PresentationButton onClick={handleDismiss}>Comenzar</PresentationButton>
+      </PresentationContentStyled>
+      <PresentationFooter>
         <PresentationVersion>v0.1.0 Stable</PresentationVersion>
         <PresentationDeveloper>Developed by Ismael Marot</PresentationDeveloper>
-      </PresentationContentStyled>
+      </PresentationFooter>
     </PresentationContainer>
   )
 }
