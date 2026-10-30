@@ -24,7 +24,7 @@ const AppPresentation = ({ onDismiss }: AppPresentationProps) => {
     <PresentationContainer>
       <PresentationContentStyled>
         <PresentationIcon
-          src="/icons/icon-192.png"
+          src={`${import.meta.env.BASE_URL}icons/icon-192.png`}
           alt="PaintNum"
           width={96}
           height={96}
