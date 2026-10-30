@@ -34,7 +34,7 @@ const AppPresentation = ({ onDismiss }: AppPresentationProps) => {
         <PresentationButton onClick={handleDismiss}>Comenzar</PresentationButton>
       </PresentationContentStyled>
       <PresentationFooter>
-        <PresentationVersion>v0.1.0 Stable</PresentationVersion>
+        <PresentationVersion>v1.0.0 Stable</PresentationVersion>
         <PresentationDeveloper>Developed by Ismael Marot</PresentationDeveloper>
       </PresentationFooter>
     </PresentationContainer>
