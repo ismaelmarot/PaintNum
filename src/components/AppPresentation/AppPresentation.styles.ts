@@ -42,8 +42,8 @@ export const PresentationContentStyled = styled.div`
 `
 
 export const PresentationIcon = styled.img`
-  width: 96px;
-  height: 96px;
+  width: 128px;
+  height: 128px;
   object-fit: contain;
   animation: ${fadeInScale} 600ms ${({ theme }) => theme.ease.standard} both;
 `

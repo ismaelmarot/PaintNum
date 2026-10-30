@@ -26,8 +26,8 @@ const AppPresentation = ({ onDismiss }: AppPresentationProps) => {
         <PresentationIcon
           src={`${import.meta.env.BASE_URL}icons/icon-192.png`}
           alt="PaintNum"
-          width={96}
-          height={96}
+          width={128}
+          height={128}
         />
         <PresentationTitle>PaintNum</PresentationTitle>
         <PresentationSubtitle>Crea tu propia Pintura por números</PresentationSubtitle>
