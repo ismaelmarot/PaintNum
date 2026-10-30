@@ -2,6 +2,7 @@
   "name": "PaintNum",
   "short_name": "PaintNum",
   "description": "PaintNum — pintura por números",
+  "id": "https://ismaelmarot.github.io/PaintNum/",
   "start_url": "/PaintNum/",
   "scope": "/PaintNum/",
   "display": "standalone",
