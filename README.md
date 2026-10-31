@@ -93,6 +93,7 @@ The app promotes creativity and sustainability, allowing users to turn personal 
 
 ---
 
+<a id="highlights"></a>
 ## 🌟 HIGHLIGHTS
 
 - Frontend-only application with React 19 + TypeScript + Vite.
@@ -106,6 +107,7 @@ The app promotes creativity and sustainability, allowing users to turn personal 
 
 ---
 
+<a id="core-feature"></a>
 ## ✨ CORE FEATURES
 
 | Feature             | Description                                                      |
@@ -120,6 +122,7 @@ The app promotes creativity and sustainability, allowing users to turn personal 
 
 ---
 
+<a id="tecnologies-stack"></a>
 ## 🛠️ TECHNOLOGIES STACK
 
 | Category            | Library / Tool     | Version |
@@ -133,6 +136,7 @@ The app promotes creativity and sustainability, allowing users to turn personal 
 
 ---
 
+<a id="codebase-layer-map"></a>
 ## 🔄 CODEBASE LAYER MAP
 
 ```mermaid
@@ -152,6 +156,7 @@ flowchart TD
 
 ---
 
+<a id="installation"></a>
 ## 🚀 INSTALLATION
 
 ### Prerequisites
@@ -186,6 +191,7 @@ npm run dev
 
 ---
 
+<a id="usage"></a>
 ## ⚙️ USAGE
 
 | Step | Description                                            |
@@ -200,6 +206,7 @@ npm run dev
 
 ---
 
+<a id="project-structure"></a>
 ## 📂 PROJECT STRUCTURE
 
 ```
@@ -223,6 +230,7 @@ PaintNum
 
 ---
 
+<a id="live-demo"></a>
 ## 🌍 LIVE DEMO
 
 | Service | URL | Status |
@@ -233,6 +241,7 @@ PaintNum
 
 ---
 
+<a id="versions"></a>
 ## 📌 VERSIONS
 
 | Version | Date       | Changes                                                                                                         |
@@ -243,6 +252,7 @@ PaintNum
 
 ---
 
+<a id="security"></a>
 ## 🔒 SECURITY
 
 - **Environment Variables**: Not applicable (frontend-only, no backend secrets).
@@ -258,10 +268,12 @@ PaintNum
 
 ---
 
+<a id="license"></a>
 ## 📄 LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](/PaintNum/blob/HEAD/LICENSE) file for details.
 
+<a id="contact"></a>
 ## 📬 CONTACT
 
 Open to collaboration, feedback, and new opportunities.
