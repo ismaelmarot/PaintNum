@@ -86,8 +86,9 @@ The app promotes creativity and sustainability, allowing users to turn personal 
 6. [Installation](#installation)
 7. [Usage](#usage)
 8. [Project Structure](#project-structure)
-9. [Live Demo](#live-demo)
-10. [Versions](#versions)
+9. [Screenshots](#screenshots)
+10. [Live Demo](#live-demo)
+11. [Versions](#versions)
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -225,6 +226,20 @@ PaintNum
 ├── vite.config.ts
 └── package.json
 ```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+---
+
+<a id="screenshots"></a>
+## 📸 [Screenshots](#-table-of-content)
+<p align="center">
+  <img src="/docs/screenshots/screenshot_01.png" width="230"/>
+  <img src="/docs/screenshots/screenshot_02.png" width="230"/>
+  <img src="/docs/screenshots/screenshot_03.png" widht="230"/>
+  <img src="/docs/screenshots/screenshot_04.png" width="230"/>
+
+</p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
