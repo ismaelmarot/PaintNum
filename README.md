@@ -238,7 +238,6 @@ PaintNum
   <img src="/docs/screenshots/screenshot_02.png" width="230"/>
   <img src="/docs/screenshots/screenshot_03.png" widht="230"/>
   <img src="/docs/screenshots/screenshot_04.png" width="230"/>
-
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;
